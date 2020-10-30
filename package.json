@@ -1,5 +1,5 @@
 {
-  "name": "eris-utils",
+  "name": "@pikokr/eris-utils",
   "version": "1.0.0",
   "main": "dist/index.js",
   "license": "AGPL-3.0",
