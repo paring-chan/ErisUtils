@@ -1,5 +1,5 @@
 {
-  "name": "@pikokr/eris-utils",
+  "name": "@chinobot/eris-utils",
   "version": "1.0.0",
   "main": "dist/index.js",
   "license": "AGPL-3.0",
@@ -7,8 +7,5 @@
     "@types/node": "^14.14.6",
     "eris": "^0.13.3",
     "typescript": "^4.0.5"
-  },
-  "publishConfig": {
-    "registry":"https://npm.pkg.github.com"
   }
 }
