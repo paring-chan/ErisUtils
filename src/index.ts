@@ -1,1 +1,3 @@
-console.log('test')
+import ErisUtilClient from "./structs/ErisUtilClient";
+
+new ErisUtilClient('')
