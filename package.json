@@ -1,6 +1,6 @@
 {
   "name": "@chinobot/eris-utils",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/index.js",
   "private": false,
   "license": "AGPL-3.0",
