@@ -10,6 +10,6 @@ export default class Help extends Command {
     }
 
     execute(ctx: CommandContext) {
-        ctx.send('테스트')
+        ctx.send('도움말')
     }
 }

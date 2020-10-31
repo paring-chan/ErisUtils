@@ -16,6 +16,16 @@ const bot = new ErisUtilClient(process.env.DISCORD_TOKEN as string, {
     }
 })
 
+process.on('uncaughtException', error => {
+    console.error(error)
+})
+
+process.on('unhandledRejection', (reason) => {
+    console.error(reason)
+})
+
+process.on('uncaughtExceptionMonitor', error => console.error(error))
+
 bot.listenerHandler!.setEmitters({
     client: bot.client
 })

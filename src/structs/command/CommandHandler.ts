@@ -38,7 +38,7 @@ class CommandHandler extends EventEmitter {
             const command = args.shift()!
             const cmd = Array.from(this.commandMap.values()).find(r=>r.options.name === command || r.options.aliases!.includes(command))
             if (!cmd) return this.emit('commandNotFound', msg)
-            const ctx = new CommandContext(this.client, msg, cmd)
+            const ctx = new CommandContext(this.client, msg, Array.from(args), cmd)
             try {
                 await cmd.execute(ctx)
             } catch (e) {
