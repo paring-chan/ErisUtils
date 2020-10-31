@@ -31,7 +31,6 @@ class ListenerHandler extends EventEmitter {
 
         return this;
     }
-
     addToEmitter(path: string) {
         const listener = this.listenerMap.get(path)
         if (!listener) throw new Error(`Listener with path ${path} not found.`)
@@ -100,6 +99,7 @@ class ListenerHandler extends EventEmitter {
     unload(path: string) {
         this.listenerMap.delete(path)
         this.removeFromEmitter(path)
+        delete require.cache[require.resolve(path)]
     }
 
     reload(path: string) {

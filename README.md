@@ -51,9 +51,9 @@ bot.connect()
 
 Typescript
 ```ts
-import {Listener, ErisUtilClient} from '@chinobot/eris-utils'
+import {Command, ErisUtilClient} from '@chinobot/eris-utils'
 
-export default class Ready extends Listener {
+export default class Ready extends Command {
     constructor(client: ErisUtilClient) {
         super(client, 'client', 'ready');
     }
@@ -66,9 +66,9 @@ export default class Ready extends Listener {
 
 Javascript
 ```js
-const {Listener, ErisUtilClient} = require('@chinobot/eris-utils')
+const {Command, ErisUtilClient} = require('@chinobot/eris-utils')
 
-export default class Ready extends Listener {
+export default class Ready extends Command {
     constructor(client: ErisUtilClient) {
         super(client, 'client', 'ready');
     }

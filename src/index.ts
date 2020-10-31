@@ -1,3 +1,6 @@
 export {default as Listener} from './structs/listener/Listener'
 export {default as ListenerHandler} from './structs/listener/ListenerHandler'
 export {default as ErisUtilClient} from './structs/ErisUtilClient'
+export {default as Command} from './structs/command/Command'
+export {default as CommandHandler} from './structs/command/CommandHandler'
+export {default as CommandContext} from './structs/command/CommandContext'

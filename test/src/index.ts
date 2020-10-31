@@ -8,6 +8,11 @@ const bot = new ErisUtilClient(process.env.DISCORD_TOKEN as string, {
     },
     initialEvents: {
         log: (msg: string) => console.log(`[LOG] ${msg}`)
+    },
+    command: {
+        dir: path.join(__dirname, 'commands'),
+        watch: true,
+        prefix: '.'
     }
 })
 
