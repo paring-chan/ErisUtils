@@ -8,6 +8,7 @@ type optionsTyp = {
     dir: string
     getLang(msg: Message): string | Promise<string>
     watch: boolean
+    fallback: string
 }
 
 export default class I18NRegistry {
@@ -16,12 +17,14 @@ export default class I18NRegistry {
     bot: ErisUtilClient
     getLang: (msg: Message) => string | Promise<string>
     watcher?: chokidar.FSWatcher
+    fallback: string
 
-    constructor(client: ErisUtilClient, {dir, getLang, watch}: optionsTyp) {
+    constructor(client: ErisUtilClient, {dir, getLang, watch, fallback}: optionsTyp) {
         this.dir = dir
         this.modules = []
         this.bot = client
         this.getLang = getLang
+        this.fallback = fallback
 
         this.loadAll(dir).then(() => this.bot.emit(`Loaded locales to I18N Registry.`))
 
@@ -60,7 +63,7 @@ export default class I18NRegistry {
     async getT(lang?: string, msg?: Message): Promise<((key: string, templates?: any) => string) | undefined> {
         if (!lang && msg) lang = await this.getLang(msg)
         const mods = this.modules.filter(r => r.lang === lang)
-        if (!mods[0]) return undefined
+        if (!mods[0]) return this.getT(this.fallback)
         return (key, templates=[]) => {
             try {
                 const ns = key.split(':')
@@ -80,7 +83,6 @@ export default class I18NRegistry {
                 }
                 return current
             } catch (e) {
-                console.log(e.stack)
                 return key
             }
         }

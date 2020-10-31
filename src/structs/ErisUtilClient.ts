@@ -29,6 +29,7 @@ class ErisUtilClient extends EventEmitter {
             dir: string
             watch: boolean
             getLang(msg: Message): string | Promise<string>
+            fallback: string
         }
     }={}) {
         super();

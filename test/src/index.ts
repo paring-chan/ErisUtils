@@ -17,9 +17,8 @@ const bot = new ErisUtilClient(process.env.DISCORD_TOKEN as string, {}, {
     i18n: {
         watch: true,
         dir: path.join(__dirname, 'locales'),
-        getLang() {
-            return 'ko-KR'
-        }
+        getLang: () => 'ko-KR',
+        fallback: 'ko-KR'
     }
 })
 

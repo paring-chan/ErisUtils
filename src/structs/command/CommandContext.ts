@@ -1,4 +1,4 @@
-import {Message, MessageFile} from "eris";
+import {Message, MessageContent, MessageFile} from "eris";
 import Command from "./Command";
 import ErisUtilClient from "../ErisUtilClient";
 
@@ -14,5 +14,5 @@ export default class CommandContext {
         this.args = args
     }
 
-    send = (content: string, file?: MessageFile|MessageFile[]) => this.bot.client.createMessage(this.message.channel.id, content, file)
+    send(content: MessageContent, file?: MessageFile|MessageFile[]) { return this.bot.client.createMessage(this.message.channel.id, content, file) }
 }
