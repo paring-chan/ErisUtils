@@ -3,6 +3,7 @@ import Listener from "./Listener";
 import ErisUtilClient from "../ErisUtilClient";
 import chokidar from 'chokidar'
 import path from "path";
+import {readdirSync, statSync} from "fs";
 
 declare interface ListenerHandler {
 }
@@ -61,6 +62,8 @@ class ListenerHandler extends EventEmitter {
             throw new Error(`Path ${dir} not found.`)
         }
 
+        this.loadAll()
+
         if (watch) {
             this.startWatch()
         }
@@ -93,10 +96,22 @@ class ListenerHandler extends EventEmitter {
     reload() {
     }
 
+    loadAll(path=this.dir) {
+        const dir = readdirSync(path)
+        dir.forEach(value => {
+            if (statSync(value).isDirectory()) {
+                this.loadAll(value)
+            } else {
+                try {
+                    this.load(value)
+                } catch (e) {}
+            }
+        })
+    }
+
     private startWatch() {
         this.watcher = chokidar.watch(this.dir)
-        this.watcher.on('add', (path1) => {
-            this.load(path1)
+        this.watcher.on('change', (path1) => {
         })
         this.client.emit('log', 'Watch started')
     }
