@@ -6,6 +6,6 @@ export default class Ready extends Listener {
     }
 
     execute() {
-        console.log('Ready!')
+        console.log(`Logged in as ${this.bot.client.user.username}#${this.bot.client.user.discriminator}`)
     }
 }
