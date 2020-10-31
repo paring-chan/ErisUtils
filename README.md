@@ -47,7 +47,7 @@ const bot = new ErisUtilClient('token', {
 bot.connect()
 ```
 
-### 리스터 예시(ready)
+### 리스너 예시(ready)
 
 Typescript
 ```ts
