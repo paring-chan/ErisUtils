@@ -1,7 +1,7 @@
 import {ErisUtilClient} from '@chinobot/eris-utils'
 import path from "path";
 
-const bot = new ErisUtilClient(process.env.DISCORD_TOKEN as string, {
+const bot = new ErisUtilClient(process.env.DISCORD_TOKEN as string, {}, {
     listener: {
         dir: path.join(__dirname, 'listeners'),
         watch: true
@@ -13,6 +13,13 @@ const bot = new ErisUtilClient(process.env.DISCORD_TOKEN as string, {
         dir: path.join(__dirname, 'commands'),
         watch: true,
         prefix: '.'
+    },
+    i18n: {
+        watch: true,
+        dir: path.join(__dirname, 'locales'),
+        getLang() {
+            return 'ko-KR'
+        }
     }
 })
 

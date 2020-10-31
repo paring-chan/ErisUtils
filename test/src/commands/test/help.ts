@@ -9,7 +9,9 @@ export default class Help extends Command {
         });
     }
 
-    execute(ctx: CommandContext) {
-        ctx.send('도움말')
+    async execute(ctx: CommandContext) {
+        const t = (await ctx.bot.i18n!.getT('ko-KR'))!
+        console.log(t('common:test'))
+        await ctx.send('도움말')
     }
 }

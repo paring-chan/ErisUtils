@@ -26,6 +26,7 @@ export default class I18NRegistry {
         this.loadAll(dir).then(() => this.bot.emit(`Loaded locales to I18N Registry.`))
 
         if (watch) {
+            this.startWatching()
         }
     }
 
@@ -45,11 +46,12 @@ export default class I18NRegistry {
             delete require.cache[require.resolve(path1)]
             const module = require(path1)
             if (this.modules.find(r => r.__path === path1)) return true
-            module.__path = path
+            module.__path = path1
             module.lang = path1.replace(this.dir, '').split('/')[1]
             const fullPath = path1.split('.')[path1.split('.').length - 2].split('/')
             module.ns = fullPath[fullPath.length - 1]
             this.modules.push(module)
+            this.bot.emit('log', `Loaded i18n namespace ${module.ns} on lng ${module.lang}`)
         } catch (e) {
             this.bot.emit('log', `Error on loading locale on path ${path1}: ${e.stack}`)
         }
@@ -58,22 +60,29 @@ export default class I18NRegistry {
     async getT(lang?: string, msg?: Message): Promise<((key: string, templates?: any) => string) | undefined> {
         if (!lang && msg) lang = await this.getLang(msg)
         const mods = this.modules.filter(r => r.lang === lang)
-        if (!mods.length) return undefined
-        return (key, templates) => {
-            const ns = key.split(':')
-            const full = ns.pop()!.split('.')
+        if (!mods[0]) return undefined
+        return (key, templates=[]) => {
+            try {
+                const ns = key.split(':')
+                const full = ns.pop()?.split('.')
 
-            let current = mods.find(r => r.ns === ns[0]) as any
+                if (!full) return key
 
-            full.forEach(p => {
-                current = current[p]
-                if (!current) return key
-            })
+                let current = mods.find(r => r.ns === ns[0]) as any
 
-            for (const template of templates) {
-                current = current.split(`{{${template}}}`).join(templates[template])
+                full.forEach(p => {
+                    current = current[p]
+                    if (!current) return key
+                })
+
+                for (const template in Array.from(templates)) {
+                    current = current.split(`{{${template}}}`).join(templates[template])
+                }
+                return current
+            } catch (e) {
+                console.log(e.stack)
+                return key
             }
-            return current
         }
     }
 
